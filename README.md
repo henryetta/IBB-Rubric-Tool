@@ -55,6 +55,3 @@ python3 -m http.server 8000
 
 then visit http://localhost:8000.
 
-Related documents
-
-This tool implements the instrument specified in ibb_barrier_inventory.md (full item development and rationale) and ibb_questionnaire_dissertation_domains.md (the three dissertation-specific domain referents). See ibb_traceability_matrix.md for literature sourcing behind each item.
