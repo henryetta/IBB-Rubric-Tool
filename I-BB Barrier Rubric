@@ -1,0 +1,170 @@
+# I-BB Barrier Rubric
+
+## 1. NASA-TLX-style structure (principle only — not NASA-TLX items or validation)
+
+| NASA-TLX | I-BB Barrier Rubric |
+|---|---|
+| Specifies a target task | Specifies a target behaviour |
+| Measures multiple workload dimensions | Measures three barrier dimensions |
+| Gives each dimension a separate rating | Gives DFE, LKA, POI separate scores |
+| Produces a multidimensional profile | Produces a three-barrier profile |
+| Applied across different tasks | Applied across behavioural domains |
+
+Unlike weighted NASA-TLX, this inventory does **not**: conduct pairwise importance weighting; produce one overall barrier score; average DFE/LKA/POI together; or multiply two scores to create a configuration. It reports three independent scores.
+
+## 2. Instructions
+"This behaviour" refers to: **[insert target behaviour, situation and context]**
+
+| Domain | Referent |
+|---|---|
+| Online commenting | Writing a constructive comment when responding to content or another person online |
+| Sedentary behaviour | Interrupting a prolonged period of sitting by engaging in brief physical activity |
+| PET recycling | Removing the label from a PET bottle before placing the bottle in a recycling bin when label removal is required |
+
+## 3. Response scale
+1=Strongly disagree · 2=Disagree · 3=Neither agree nor disagree · 4=Agree · 5=Strongly agree. All items keyed consistently: higher response = stronger barrier. No reverse-scored items.
+
+---
+
+## 4. DFE — Distance from Effect
+*Perceived separation between a behaviour and its consequences: distant, delayed, invisible, insignificant, or insufficiently salient at the point of execution.*
+
+| Code | Item | Facet | Citation |
+|---|---|---|---|
+| DFE1 | The consequences of this behaviour are farther in time and place from the moment I perform it. | Consequence distance | [12], [17], [19], [29] |
+| DFE2 | The effects of this behaviour are difficult to see immediately. | Immediate visibility | [6], [28] |
+| DFE3 | Performing this behaviour once seems unlikely to make a noticeable difference. | Perceived individual impact | [10], [14], [21], [25], [26] |
+| DFE4 | It is difficult to connect this behaviour with its eventual consequences. | Action–outcome connection | [7], [11], [22], [30] |
+| DFE5 | The consequences of this behaviour rarely come to mind when I decide how to act. | Consequence salience at execution | [40], [6], [37] |
+
+## 5. LKA — Lack of Knowledge/Awareness
+*Insufficient procedural, situational, consequence-related, or rule-related understanding needed to recognise and perform the behaviour appropriately.*
+
+| Code | Item | Facet | Citation |
+|---|---|---|---|
+| LKA1 | I am uncertain about how to perform this behaviour correctly. | Procedural knowledge | [2], [24], [26], [32] |
+| LKA2 | I am uncertain about what actions this behaviour requires. | Requirement awareness | [1], [13], [16], [25], [39] |
+| LKA3 | I am uncertain about the situations in which this behaviour should be performed. | Situational recognition | [20], [23], [26] |
+| LKA4 | I lack information about the consequences of performing or not performing this behaviour. | Consequence knowledge | [5], [7] |
+| LKA5 | The information or guidance available about this behaviour is difficult to understand. | Guidance comprehension | [3], [15], [21], [23], [38] |
+
+## 6. POI — Perception of Inconvenience
+*The extent to which the behaviour is perceived as effortful, time-consuming, disruptive, troublesome, or difficult in the relevant context.*
+
+| Code | Item | Facet | Citation |
+|---|---|---|---|
+| POI1 | Performing this behaviour requires too much effort. | Perceived effort | [22], [26], [28], [30], [32], [33], [37], [39] |
+| POI2 | Performing this behaviour is inconvenient within my normal routine. | Routine disruption | [9], [18], [23], [34] |
+| POI3 | Performing this behaviour takes more time than I would prefer. | Perceived time cost | [16], [30] |
+| POI4 | The actions required to perform this behaviour are troublesome. | Procedural burden | [23], [26], [33], [36] |
+| POI5 | It is difficult to perform this behaviour in the situations where it is needed. | Situational inconvenience | [10], [27], [30], [31], [32], [34], [37] |
+
+---
+
+## 7. Calculation
+Domain-level: S̄_{b,d} = (1/N_d) Σ M_{p,b,d}, reported as B̄_d = (DFE̅_d, LKA̅_d, POI̅_d).
+
+| Domain | DFE | LKA | POI | Status |
+|---|---:|---:|---:|---|
+| Online commenting | — | — | — | Requires respondent data |
+| Sedentary behaviour | — | — | — | Requires respondent data |
+| PET recycling | — | — | — | Requires respondent data |
+
+## 8. Barrier-profile interpretation
+
+The profile can indicate: which barrier has the highest reported intensity; the relative manifestation of the three barriers; whether profiles differ across target behaviours; which barriers merit further investigation; which intervention targets may be relevant.
+
+Working threshold: subscale mean ≥ 3.0. The scale's midpoint (3 = "neither agree nor disagree") is the neutral anchor. Because every item is worded in the barrier-intensity direction, a mean at or above 3 means respondents are, on balance, agreeing that the barrier statements describe their experience rather than rejecting them — the barrier is net-present, not net-absent. That's the actual basis for the cutoff: it's where the scale itself switches from disagreement to agreement, not an arbitrary number picked for convenience. It stays a working threshold rather than a final one because it hasn't been checked against real score distributions yet — the domain-distribution survey will show whether 3.0 actually separates elevated from non-elevated barriers in practice, or whether real data cluster in a way that calls for a different cutoff.
+
+The profile cannot independently establish: a confirmed barrier configuration; causality; interaction between barriers; that the two highest barriers necessarily constitute a pair; that small score differences above the threshold are meaningful.
+
+Until the distribution-based validation is complete, report descriptively. Use: "DFE and LKA exceeded the working threshold and were descriptively more prominent than POI within this sample." Do not write: "DFE × LKA was conclusively identified as the active configuration."
+
+## 9. How the 39-study corpus was used
+Pathway: reported finding → barrier → facet → candidate item. The corpus provides the theoretical and empirical basis for the item pool — **it does not answer the items or generate subscale scores.**
+
+### DFE item-development pathway
+| Recurring finding | Facet | Item |
+|---|---|---|
+| Consequences appear distant | Consequence distance | DFE1 |
+| Effects not immediately visible | Immediate visibility | DFE2 |
+| One individual action seems insignificant | Individual impact | DFE3 |
+| Difficult to connect action to outcomes | Action–outcome connection | DFE4 |
+| Consequences not salient during action | Point-of-execution salience | DFE5 |
+
+### LKA item-development pathway
+| Recurring finding | Facet | Item |
+|---|---|---|
+| People don't know how to act | Procedural knowledge | LKA1 |
+| Required actions unclear | Requirement awareness | LKA2 |
+| People don't recognise when action is required | Situational recognition | LKA3 |
+| Consequence information missing | Consequence knowledge | LKA4 |
+| Instructions/rules confusing | Guidance comprehension | LKA5 |
+
+### POI item-development pathway
+| Recurring finding | Facet | Item |
+|---|---|---|
+| Behaviour requires excessive effort | Perceived effort | POI1 |
+| Behaviour disrupts routines | Routine disruption | POI2 |
+| Behaviour takes too much time | Perceived time cost | POI3 |
+| Required actions create hassle | Procedural burden | POI4 |
+| Difficult at point of execution | Situational inconvenience | POI5 |
+
+## 10. Relationship to the literature evidence mapping
+R_{b,d} = n_{b,d}/N_d × 100, N_d=13 per domain (see barrier_severity_rubric.md).
+
+| Literature evidence mapping | I-BB Barrier Rubric |
+|---|---|
+| Unit: publication | Unit: respondent |
+| Measures frequency in selected literature | Measures perceived barrier intensity |
+| Depends on number/focus of studies | Can be administered for a new, unstudied behaviour |
+| Produces a literature percentage | Produces DFE, LKA, POI scores |
+| Supports construct development | Supports future behavioural diagnosis |
+
+---
+
+## References
+
+| Key | Citation |
+|---|---|
+| [1] | Allison, A. L., Lorencatto, F., Michie, S., & Miodownik, M. (2022). Barriers and Enablers to Food Waste Recycling: A Mixed Methods Study Amongst UK Citizens. *International Journal of Environmental Research and Public Health*, 19(5), 2729. |
+| [2] | Babaei, A. A., Alavi, N., Goudarzi, G., Teymouri, P., Ahmadi, K., & Rafiee, M. (2015). Household Recycling Knowledge, Attitudes and Practices Towards Solid Waste Management. *Resources, Conservation and Recycling*, 102, 94-100. |
+| [3] | Bowman-Smith, C. K., Sosa-Hernandez, L., & Nilsen, E. S. (2021). The Other Side of the Screen. *Journal of Adolescence*, 92, 46–56. |
+| [4] | Buchanan, T. (2020). Why Do People Spread False Information Online? *PLoS ONE*, 15(10). *(coded ✗ for LKA — not cited as item support; retained in the 39-study corpus)* |
+| [5] | Chang, J. P., Cheng, J., & Danescu-Niculescu-Mizil, C. (2020). Don't Let Me Be Misunderstood. *Proceedings of WWW 2020*. |
+| [6] | Chang, J. P., Schluger, C., & Danescu-Niculescu-Mizil, C. (2022). Thread With Caution. *Proc. ACM Hum.-Comput. Interact.*, 6(CSCW2). |
+| [7] | Chen, S., Yang, K., & Ko, A. (2025). Facilitators and Barriers of Reducing Sedentary Behavior in Sedentary and Non-Sedentary Older Adults. *BMC Public Health*, 25, 2472. |
+| [8] | Cheng, J., Bernstein, M., Danescu-Niculescu-Mizil, C., & Leskovec, J. (2017). Anyone Can Become a Troll. *Proceedings of CSCW 2017*. *(coded — for all three barriers — not cited as item support; retained in the 39-study corpus)* |
+| [9] | Cole, J. A., Tully, M. A., & Cupples, M. E. (2015). 'They Should Stay at Their Desk Until the Work's Done.' *BMC Research Notes*, 8, 683. |
+| [10] | Crombie, I. K., Irvine, L., Williams, B., McGinnis, A. R., Slane, P. W., Alder, E. M., & McMurdo, M. E. T. (2004). Why Older People Do Not Participate in Leisure Time Physical Activity. *Age and Ageing*, 33(3), 287–292. |
+| [11] | Curran, F., Brennan, C., Matthews, J., & O'Donoghue, G. (2023/2024). A Qualitative Study of Perceived Barriers and Facilitators to Interrupting Sedentary Behavior Among Adults Living With Obesity. |
+| [12] | Dillon, K. P., Neo, R. L., & Seely, N. (2015). Civil Keystrokes. *Proceedings of the 16th Annual Meeting of AoIR*. |
+| [13] | Giao, N. T., & Thien, T. T. (2022). Knowledge, Attitude and Practice Towards Domestic Solid Waste Management in Rural District, Bac Lieu Province, Vietnam. *Indonesian Journal of Environmental Management and Sustainability*, 6(4), 130-136. |
+| [14] | Gibbs, B. B., Jones, M. A., Whitaker, K. M., Ross, S. T., & Davis, K. K. (2021). Measurement of Barriers, Attitudes, and Expectations for Sitting Less in Pregnancy. *American Journal of Health Behavior*, 45(6), 956-970. |
+| [15] | Han, S., Brazeal, L. M., & Pennington, N. (2018). Is Civility Contagious? *Social Media + Society*, 4(3). |
+| [16] | Juliana, N., Lada, S., Chekima, B., & Abdul Adis, A.-A. (2022). Exploring Determinants Shaping Recycling Behavior Using an Extended TPB Model. *Sustainability*. |
+| [17] | Knustad, M., & Johansson, C. (2021). Anonymity and Inhibition in Newspaper Comments. *Information*, 12(3), 106. |
+| [18] | Lansing, J. E., Ellingson, L. D., DeShaw, K. J., Cruz-Maldonado, G., Hurt, T. R., & Meyer, J. D. (2021). A Qualitative Analysis of Barriers and Facilitators to Reducing Sedentary Time in Adults With Chronic Low Back Pain. |
+| [19] | Marín-López, I., Zych, I., Ortega-Ruiz, R., Monks, C. P., & Llorent, V. J. (2020). Empathy Online and Moral Disengagement Through Technology. *Children and Youth Services Review*. |
+| [20] | Matias, J. N. (2019). Preventing Harassment and Increasing Group Participation Through Social Norms in 2,190 Online Science Discussions. *PNAS*. |
+| [21] | McGowan, L. J., Powell, R., & French, D. P. (2021). Older Adults' Construal of Sedentary Behaviour. *Journal of Health Psychology*, 26(12), 2186-2199. |
+| [22] | Niven, A., & Hu, D. (2018). Office Workers' Beliefs About Reducing Sitting Time at Work. *Health Psychology and Behavioral Medicine*, 6(1), 15-29. |
+| [23] | Ojo, S. O., Bailey, D. P., Hewson, D. J., & Chater, A. M. (2019). Perceived Barriers and Facilitators to Breaking Up Sitting Time Among Desk-Based Office Workers. *IJERPH*, 16(16), 2903. |
+| [24] | Oskamp, S., Harrington, M. J., Edwards, T. C., Sherwood, D. L., Okuda, S. M., & Swanson, D. C. (1991). Factors Influencing Household Recycling Behavior. *Environment and Behavior*, 23(4), 494-519. |
+| [25] | Pachu, N., Strachan, S., McMillan, D., Ripat, J., & Webber, S. (2020). University Students' Knowledge, Self-Efficacy, Outcome Expectations, and Barriers Related to Reducing Sedentary Behavior. *Journal of American College Health*, 70(4), 1146-1153. |
+| [26] | Pegels, A., Castañeda, J. L., Humphreys, C., Kötter, C., Negre, M., Weidner, C., & Kutzner, F. (2022). Aligning Recycling Behaviors and the Recycling System. *Waste Management*, 138, 1–7. |
+| [27] | Rodzi, Z. M., Hazri, A. N., Mohd Azri, N. A. S., Sharul Rhmdan, N. D. F., Zaharudin, Z. A., & Uttunggadewa, S. (2023). Barriers to Household Waste Recycling: Paving the Path to a Sustainable Future. |
+| [28] | Roy, D., Berry, E., & Dempster, M. (2022). "If It Is Not Made Easy for Me, I Will Just Not Bother." *PLoS ONE*, 17(5), e0267284. |
+| [29] | Santana, A. D. (2014). Virtuous or Vitriolic. *Journalism Practice*, 8(1), 18–33. |
+| [30] | Shuval, K., Hébert, E. T., Siddiqi, Z., Leonard, T., Craddock Lee, S., Tiro, J. A., McCallister, K., & Sugg Skinner, C. (2013). Impediments and Facilitators to Physical Activity and Perceptions of Sedentary Behavior: The Fair Park Study. *Preventing Chronic Disease*, 10, 130125. |
+| [31] | Söderberg, I.-L., Wester, M., & Zalejska Jonsson, A. (2022). Exploring Factors Promoting Recycling Behavior in Student Housing. *Sustainability*, 14(7), 4264. |
+| [32] | Strydom, W. (2018). Barriers to Household Waste Recycling: Empirical Evidence from South Africa. *Recycling*, 3(3), 41. |
+| [33] | Sudin, M. A. F., Ma'rof, A. A., Abdullah, H., & Zarimohzzabeih, Z. (2023). Inconvenience and Perceived Behavioral Control as the Main Predictive Factors of Recycling Behavior. *IJARBSS*, 13(14), 16-33. |
+| [34] | Taylor, W. C., Suminski, R. R., Das, B. M., Paxton, R. J., & Craig, D. W. (2018). Organizational Culture and Implications for Workplace Interventions to Reduce Sitting Time Among Office-Based Workers. *Frontiers in Public Health*, 6, 263. |
+| [35] | Tonglet, M., Phillips, P. S., & Read, A. D. (2004). Using the Theory of Planned Behaviour to Investigate the Determinants of Recycling Behaviour. *(coded ✗ for POI — not cited as item support; retained in the 39-study corpus)* |
+| [36] | Verma, A., Islam, S., Moghaddam, V., & Anwar, A. (2025). Queuing for Civility: Regulating Emotions and Reducing Toxicity in Digital Discourse. |
+| [37] | Voss, M. L., Pope, J. P., & Copeland, J. L. (2020). Reducing Sedentary Time Among Older Adults in Assisted Living. *IJERPH*, 17(3), 717. |
+| [38] | Yurdakul, Y., & Bütün Ayhan, A. (2022). The Effect of the Cyberbullying Awareness Program on Adolescents' Awareness of Cyberbullying and Their Coping Skills. *Current Psychology*, 42(28), 24208–24222. |
+| [39] | Zaikova, A., Deviatkin, I., Havukainen, J., Horttanainen, M., Astrup, T. F., Saunila, M., & Happonen, A. (2022). Factors Influencing Household Waste Separation Behavior: Cases of Russia and Finland. *Recycling*, 7(4), 52. |
+| [40] | Gardner, B., Mainsbridge, C. P., Rebar, A. L., Cooley, P. D., Honan, C., O'Brien, J., & Pedersen, S. J. (2023). Breaking the Habit? *International Journal of Behavioral Medicine*. *(not part of the 39-study corpus; added separately to ground DFE5)* |
+| [41] | Hart, S. G., & Staveland, L. E. (1988). Development of NASA-TLX (Task Load Index). In P. A. Hancock & N. Meshkati (Eds.), *Human Mental Workload* (Advances in Psychology, Vol. 52, pp. 139–183). North-Holland. *(structural reference for §1's comparison — not a source for any item)* |
