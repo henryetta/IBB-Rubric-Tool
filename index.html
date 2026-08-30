@@ -309,6 +309,17 @@ function renderPinGate(){
 function render(){
   const app = document.getElementById('app');
 
+  if(state.screen === 'noLink'){
+    app.innerHTML = `
+      <div class="eyebrow">I-BB Barrier Rubric</div>
+      <h1>No study link provided</h1>
+      <div class="panel">
+        <p style="font-size:14px; line-height:1.6;">This page needs a specific link to work. If you were sent here to complete a survey, please use the exact link you were given rather than this page directly.</p>
+      </div>
+    `;
+    return;
+  }
+
   if(state.loadError){
     app.innerHTML = `
       <div class="eyebrow">I-BB Barrier Rubric</div>
@@ -653,10 +664,16 @@ async function boot(){
   await loadState();
   const params = new URLSearchParams(window.location.search);
   const domainParam = params.get('domain');
+  const isAdmin = params.get('admin') === '1';
+
   if(domainParam && state.domains[domainParam]){
     state.participantMode = true;
     state.activeDomain = domainParam;
     state.screen = 'consent';
+  } else if(isAdmin){
+    state.screen = 'home'; // will hit the PIN gate inside render()
+  } else {
+    state.screen = 'noLink';
   }
   render();
 }
