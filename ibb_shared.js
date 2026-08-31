@@ -100,15 +100,14 @@ async function fetchDomainMeta(){
   return domains;
 }
 async function saveRespondentRemote(domainName, prolificId, profile, attention, durationSeconds, surveyStartedAt){
-  const { data, error } = await sb.from('respondents').insert({
-    domain_name: domainName,
-    prolific_id: prolificId,
-    respondent_code: 'pending', // overwritten by DB trigger
-    dfe: profile.DFE, lka: profile.LKA, poi: profile.POI,
-    attention_failed: attention.failCount, attention_total: ATTENTION_ITEMS.length,
-    started_at: new Date(surveyStartedAt).toISOString(),
-    duration_seconds: durationSeconds
-  }).select().single();
+  const { data, error } = await sb.rpc('submit_respondent', {
+    p_domain_name: domainName,
+    p_prolific_id: prolificId,
+    p_dfe: profile.DFE, p_lka: profile.LKA, p_poi: profile.POI,
+    p_attention_failed: attention.failCount, p_attention_total: ATTENTION_ITEMS.length,
+    p_started_at: new Date(surveyStartedAt).toISOString(),
+    p_duration_seconds: durationSeconds
+  });
   if(error) throw error;
-  return data.respondent_code;
+  return data; // the respondent_code
 }
