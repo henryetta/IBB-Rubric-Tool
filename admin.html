@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>I-BB Barrier Rubric — Researcher</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="ibb_shared.js"></script>
+<style>
+  :root{
+    --bg:#EEF1F5; --panel:#FFFFFF; --ink:#1B2432; --ink-soft:#5B6472;
+    --line:#DDE2E9; --accent:#3B5BA5; --accent-ink:#FFFFFF; --radius:14px;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0; background:var(--bg); color:var(--ink); font-family:'IBM Plex Sans',system-ui,sans-serif; min-height:100vh; display:flex; justify-content:center; padding:32px 16px;}
+  .app{width:100%; max-width:760px;}
+  .eyebrow{font-family:'IBM Plex Mono',monospace; font-size:12px; letter-spacing:.08em; text-transform:uppercase; color:var(--accent); margin-bottom:6px; font-weight:600;}
+  h1{font-size:22px; margin:0 0 4px; font-weight:700; letter-spacing:-.01em;}
+  .sub{color:var(--ink-soft); font-size:14px; margin:0 0 24px; line-height:1.5;}
+  .panel{background:var(--panel); border:1px solid var(--line); border-radius:var(--radius); padding:28px; box-shadow:0 1px 2px rgba(20,30,50,0.04); margin-bottom:20px;}
+  label{display:block; font-size:13px; font-weight:600; margin:0 0 6px; color:var(--ink);}
+  .hint{font-size:12px; color:var(--ink-soft); margin:-2px 0 8px;}
+  input[type=text], textarea{width:100%; border:1px solid var(--line); border-radius:9px; padding:11px 13px; font-family:'IBM Plex Sans',sans-serif; font-size:14px; color:var(--ink); background:#FBFCFD; resize:vertical;}
+  input[type=text]:focus, textarea:focus{outline:2px solid var(--accent); outline-offset:1px; border-color:var(--accent);}
+  .field{margin-bottom:18px;}
+  textarea{min-height:64px; line-height:1.5;}
+  button{font-family:'IBM Plex Sans',sans-serif; font-weight:600; font-size:14px; border:none; border-radius:9px; padding:12px 20px; cursor:pointer;}
+  button:disabled{opacity:.4; cursor:not-allowed;}
+  .btn-primary{background:var(--accent); color:var(--accent-ink);}
+  .btn-ghost{background:transparent; color:var(--ink-soft); border:1px solid var(--line);}
+  .btn-ghost:hover{background:#F3F5F8;}
+  .btn-small{padding:8px 14px; font-size:13px;}
+  .row{display:flex; gap:12px; margin-top:22px;}
+  .row.end{justify-content:flex-end;}
+  .row.between{justify-content:space-between; align-items:center;}
+  .row.wrap{flex-wrap:wrap;}
+  .profile-wrap{display:flex; gap:28px; align-items:center; flex-wrap:wrap; margin-bottom:8px;}
+  .profile-vals{flex:1; min-width:180px;}
+  .pv-row{display:flex; justify-content:space-between; align-items:center; padding:9px 0; border-bottom:1px solid var(--line);}
+  .pv-row:last-child{border-bottom:none;}
+  .pv-name{font-size:13px; font-weight:600;}
+  .pv-num{font-family:'IBM Plex Mono',monospace; font-size:16px; font-weight:600;}
+  .pv-sub{font-size:11px; color:var(--ink-soft); font-family:'IBM Plex Mono',monospace;}
+  table{width:100%; border-collapse:collapse; margin-top:8px; font-size:13px;}
+  th,td{text-align:left; padding:9px 8px; border-bottom:1px solid var(--line);}
+  th{font-family:'IBM Plex Mono',monospace; font-size:10px; text-transform:uppercase; letter-spacing:.05em; color:var(--ink-soft); font-weight:600;}
+  td.num{font-family:'IBM Plex Mono',monospace;}
+  .section-title{font-size:13px; font-weight:700; margin:28px 0 12px; color:var(--ink);}
+  .empty{color:var(--ink-soft); font-size:13px; padding:16px 0;}
+  .domain-card{background:var(--panel); border:1px solid var(--line); border-radius:12px; padding:16px 18px; margin-bottom:10px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;}
+  .domain-card .name{font-weight:600; font-size:15px;}
+  .domain-card .count{font-family:'IBM Plex Mono',monospace; font-size:12px; color:var(--ink-soft);}
+</style>
+</head>
+<body>
+<div class="app" id="app"></div>
+<script>
+const RESEARCHER_PIN = '2468'; // change this to whatever you want your access code to be
+let state = { screen:'pin', domains:{}, activeDomain:null, unlocked:false };
+
+function nextRespondentId(){ return ''; } // codes are DB-generated now, kept only for compatibility
+function respondentLink(domainName){
+  const url = new URL(window.location.href);
+  url.pathname = url.pathname.replace(/admin\.html$/, 'index.html');
+  url.search = '';
+  url.searchParams.set('domain', domainName);
+  return url.toString();
+}
+
+async function loadDomains(){
+  const domains = await fetchDomainMeta();
+  for(const name of Object.keys(domains)) domains[name].respondents = [];
+  return domains;
+}
+async function loadDomainResults(domainName){
+  const { data, error } = await sb.rpc('get_domain_respondents_secure', { p_domain: domainName, p_pin: RESEARCHER_PIN });
+  if(error) throw error;
+  return data.map(r => ({
+    id: r.respondent_code, prolificId: r.prolific_id,
+    profile: { DFE: Number(r.dfe), LKA: Number(r.lka), POI: Number(r.poi) },
+    attention: { failCount: r.attention_failed, total: r.attention_total },
+    durationSeconds: r.duration_seconds, ts: r.created_at
+  }));
+}
+async function createDomainRemote(name, scenario, behaviour){
+  const { error } = await sb.rpc('create_domain_secure', { p_name: name, p_scenario: scenario, p_behaviour: behaviour, p_pin: RESEARCHER_PIN });
+  if(error) throw error;
+}
+
+function domainAggregateWrap(respondents){ return domainAggregate(respondents); }
+
+function render(){
+  const app = document.getElementById('app');
+
+  if(state.screen === 'pin'){
+    app.innerHTML = `
+      <div class="eyebrow">I-BB Barrier Rubric</div>
+      <h1>Researcher access</h1>
+      <p class="sub">Enter your access code to manage domains and view results.</p>
+      <div class="panel">
+        <div class="field"><label for="pin">Access code</label><input type="text" id="pin" placeholder="Enter code" autocomplete="off"></div>
+        <div class="row end"><button class="btn-primary" id="unlockBtn">Continue</button></div>
+        <p class="hint" id="pinError" style="color:#B4573F; margin-top:10px; display:none;">Incorrect code — try again.</p>
+      </div>
+    `;
+    const tryUnlock = async () => {
+      const val = document.getElementById('pin').value.trim();
+      if(val !== RESEARCHER_PIN){ document.getElementById('pinError').style.display = 'block'; return; }
+      const btn = document.getElementById('unlockBtn');
+      btn.disabled = true; btn.textContent = 'Loading...';
+      try{
+        state.domains = await loadDomains();
+        state.unlocked = true;
+        state.screen = 'home';
+        render();
+      }catch(e){
+        document.getElementById('pinError').textContent = 'Could not load domains: ' + (e.message||'unknown error');
+        document.getElementById('pinError').style.display = 'block';
+        btn.disabled = false; btn.textContent = 'Continue';
+      }
+    };
+    document.getElementById('unlockBtn').onclick = tryUnlock;
+    document.getElementById('pin').onkeydown = e => { if(e.key==='Enter') tryUnlock(); };
+    return;
+  }
+
+  if(state.screen === 'home'){
+    const names = Object.keys(state.domains);
+    app.innerHTML = `
+      <div class="eyebrow">I-BB Barrier Rubric — Researcher</div>
+      <h1>Domains</h1>
+      <p class="sub">Add respondents to an existing domain, or set up a new one. The 15 rubric items stay fixed across every domain.</p>
+      ${names.length ? names.map(n=>{
+        const d = state.domains[n];
+        return `<div class="domain-card">
+          <div><div class="name">${escapeHtml(n)}</div><div class="count">${d.respondents.length} respondent${d.respondents.length===1?'':'s'} loaded</div></div>
+          <div class="row" style="margin:0;">
+            <button class="btn-ghost btn-small" data-link="${escapeHtml(n)}">Copy respondent link</button>
+            <button class="btn-ghost btn-small" data-summary="${escapeHtml(n)}">View summary</button>
+          </div>
+        </div>`;
+      }).join('') : '<p class="empty">No domains yet — create one below.</p>'}
+      <div class="row end"><button class="btn-primary" id="newDomainBtn">+ New domain</button></div>
+    `;
+    app.querySelectorAll('[data-summary]').forEach(b => b.onclick = async () => {
+      state.activeDomain = b.dataset.summary;
+      b.textContent = 'Loading...';
+      try{ state.domains[state.activeDomain].respondents = await loadDomainResults(state.activeDomain); }
+      catch(e){ alert('Could not load results: ' + (e.message||'unknown error')); return; }
+      state.screen = 'domainSummary';
+      render();
+    });
+    app.querySelectorAll('[data-link]').forEach(b => b.onclick = () => {
+      const link = respondentLink(b.dataset.link);
+      navigator.clipboard.writeText(link).then(() => {
+        const old = b.textContent; b.textContent = 'Link copied!';
+        setTimeout(() => { b.textContent = old; }, 1500);
+      }).catch(() => { prompt('Copy this link:', link); });
+    });
+    document.getElementById('newDomainBtn').onclick = () => { state.screen = 'newDomain'; render(); };
+    return;
+  }
+
+  if(state.screen === 'newDomain'){
+    app.innerHTML = `
+      <div class="eyebrow">New domain</div>
+      <h1>Describe the domain</h1>
+      <p class="sub">This defines the scenario and behaviour reference respondents will see. Items themselves cannot be edited here.</p>
+      <div class="panel">
+        <div class="field"><label for="domain">Domain name</label><input type="text" id="domain" placeholder="e.g. Online commenting"></div>
+        <div class="field"><label for="scenario">Scenario</label><div class="hint">The situation respondents should picture before answering.</div><textarea id="scenario" placeholder="e.g. Imagine you come across a post online that you disagree with..."></textarea></div>
+        <div class="field"><label for="behaviour">Behaviour reference</label><div class="hint">The exact behaviour "this behaviour" refers to throughout the items.</div><textarea id="behaviour" placeholder="e.g. Writing a constructive comment when responding to content online."></textarea></div>
+        <div class="row between">
+          <button class="btn-ghost" id="cancelBtn">Cancel</button>
+          <button class="btn-primary" id="createBtn" disabled>Create domain</button>
+        </div>
+      </div>
+    `;
+    const domainEl = document.getElementById('domain'), scenarioEl = document.getElementById('scenario'), behEl = document.getElementById('behaviour');
+    const checkValid = () => { document.getElementById('createBtn').disabled = !(domainEl.value.trim() && scenarioEl.value.trim() && behEl.value.trim()); };
+    [domainEl, scenarioEl, behEl].forEach(el => el.oninput = checkValid);
+    document.getElementById('cancelBtn').onclick = () => { state.screen = 'home'; render(); };
+    document.getElementById('createBtn').onclick = async () => {
+      const name = domainEl.value.trim();
+      if(state.domains[name]){ alert('A domain with this name already exists.'); return; }
+      const btn = document.getElementById('createBtn');
+      btn.disabled = true; btn.textContent = 'Creating...';
+      try{
+        await createDomainRemote(name, scenarioEl.value.trim(), behEl.value.trim());
+        state.domains[name] = { scenario: scenarioEl.value.trim(), behaviour: behEl.value.trim(), respondents: [] };
+        state.screen = 'home';
+        render();
+      }catch(e){
+        alert('Could not create domain: ' + (e.message || 'unknown error'));
+        btn.disabled = false; btn.textContent = 'Create domain';
+      }
+    };
+    return;
+  }
+
+  if(state.screen === 'domainSummary'){
+    const d = state.domains[state.activeDomain];
+    const agg = domainAggregateWrap(d.respondents);
+    const meanProfile = { DFE: agg.DFE.mean, LKA: agg.LKA.mean, POI: agg.POI.mean };
+    const rows = d.respondents.map(r => `
+      <tr>
+        <td>${r.id}</td>
+        <td style="font-family:'IBM Plex Mono',monospace; font-size:11px;">${escapeHtml(r.prolificId)}</td>
+        <td class="num" style="color:${BARRIER_COLOR.DFE}">${r.profile.DFE.toFixed(2)}</td>
+        <td class="num" style="color:${BARRIER_COLOR.LKA}">${r.profile.LKA.toFixed(2)}</td>
+        <td class="num" style="color:${BARRIER_COLOR.POI}">${r.profile.POI.toFixed(2)}</td>
+        <td class="num">${r.durationSeconds}s</td>
+        <td>${r.attention.failCount === 0 ? '<span style="color:#3E8E86;">Passed</span>' : `<span style="color:#B4573F; font-weight:600;">Failed ${r.attention.failCount}/${ATTENTION_ITEMS.length}</span>`}</td>
+      </tr>
+    `).join('');
+    app.innerHTML = `
+      <div class="eyebrow">${escapeHtml(state.activeDomain)}</div>
+      <h1>Domain-level calculation</h1>
+      <p class="sub">Aggregated across ${d.respondents.length} respondent${d.respondents.length===1?'':'s'}.</p>
+      ${d.respondents.length === 0 ? `<div class="panel"><p class="empty">No respondents yet for this domain.</p></div>` : `
+        <div class="panel">
+          <div class="profile-wrap">
+            ${radarSVG(meanProfile)}
+            <div class="profile-vals">
+              <div class="pv-row"><span class="pv-name" style="color:${BARRIER_COLOR.DFE}">DFE</span><span><span class="pv-num">${agg.DFE.mean.toFixed(2)}</span><br><span class="pv-sub">SD ${agg.DFE.sd.toFixed(2)}, n=${agg.DFE.n}</span></span></div>
+              <div class="pv-row"><span class="pv-name" style="color:${BARRIER_COLOR.LKA}">LKA</span><span><span class="pv-num">${agg.LKA.mean.toFixed(2)}</span><br><span class="pv-sub">SD ${agg.LKA.sd.toFixed(2)}, n=${agg.LKA.n}</span></span></div>
+              <div class="pv-row"><span class="pv-name" style="color:${BARRIER_COLOR.POI}">POI</span><span><span class="pv-num">${agg.POI.mean.toFixed(2)}</span><br><span class="pv-sub">SD ${agg.POI.sd.toFixed(2)}, n=${agg.POI.n}</span></span></div>
+            </div>
+          </div>
+        </div>
+        <div class="section-title">Per-respondent breakdown</div>
+        <div class="panel"><table><thead><tr><th>Respondent</th><th>Prolific ID</th><th>DFE</th><th>LKA</th><th>POI</th><th>Duration</th><th>Attention</th></tr></thead><tbody>${rows}</tbody></table></div>
+      `}
+      <div class="row between">
+        <button class="btn-ghost" id="homeBtn">Back to domains</button>
+        ${d.respondents.length ? '<button class="btn-ghost" id="exportBtn">Export CSV</button>' : ''}
+      </div>
+    `;
+    document.getElementById('homeBtn').onclick = () => { state.screen = 'home'; render(); };
+    const exportBtn = document.getElementById('exportBtn');
+    if(exportBtn) exportBtn.onclick = () => {
+      const header = 'domain,respondent_id,prolific_id,DFE,LKA,POI,duration_seconds,attention_checks_failed,attention_total,timestamp\n';
+      const rows2 = d.respondents.map(r => [state.activeDomain, r.id, r.prolificId, r.profile.DFE.toFixed(3), r.profile.LKA.toFixed(3), r.profile.POI.toFixed(3), r.durationSeconds, r.attention.failCount, ATTENTION_ITEMS.length, r.ts]
+        .map(v => `"${(v+'').replace(/"/g,'""')}"`).join(',')).join('\n');
+      const blob = new Blob([header+rows2], {type:'text/csv'});
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url; a.download = `${state.activeDomain.replace(/\s+/g,'_')}_results.csv`; a.click();
+      URL.revokeObjectURL(url);
+    };
+    return;
+  }
+}
+
+render();
+</script>
+</body>
+</html>
