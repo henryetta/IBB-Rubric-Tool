@@ -7,61 +7,30 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="ibb_shared.js"></script>
 <style>
   :root{
     --bg:#EEF1F5; --panel:#FFFFFF; --ink:#1B2432; --ink-soft:#5B6472;
-    --line:#DDE2E9; --accent:#3B5BA5; --accent-ink:#FFFFFF;
-    --teal:#3E8E86; --amber:#C08A2E; --clay:#B4573F;
-    --radius:14px;
+    --line:#DDE2E9; --accent:#3B5BA5; --accent-ink:#FFFFFF; --radius:14px;
   }
   *{box-sizing:border-box;}
-  body{
-    margin:0; background:var(--bg); color:var(--ink);
-    font-family:'IBM Plex Sans',system-ui,sans-serif;
-    min-height:100vh; display:flex; justify-content:center; padding:32px 16px;
-  }
-  .app{width:100%; max-width:760px;}
-  .eyebrow{
-    font-family:'IBM Plex Mono',monospace; font-size:12px; letter-spacing:.08em;
-    text-transform:uppercase; color:var(--accent); margin-bottom:6px; font-weight:600;
-  }
+  body{margin:0; background:var(--bg); color:var(--ink); font-family:'IBM Plex Sans',system-ui,sans-serif; min-height:100vh; display:flex; justify-content:center; padding:32px 16px;}
+  .app{width:100%; max-width:720px;}
+  .eyebrow{font-family:'IBM Plex Mono',monospace; font-size:12px; letter-spacing:.08em; text-transform:uppercase; color:var(--accent); margin-bottom:6px; font-weight:600;}
   h1{font-size:22px; margin:0 0 4px; font-weight:700; letter-spacing:-.01em;}
   .sub{color:var(--ink-soft); font-size:14px; margin:0 0 24px; line-height:1.5;}
-  .panel{
-    background:var(--panel); border:1px solid var(--line); border-radius:var(--radius);
-    padding:28px; box-shadow:0 1px 2px rgba(20,30,50,0.04); margin-bottom:20px;
-  }
+  .panel{background:var(--panel); border:1px solid var(--line); border-radius:var(--radius); padding:28px; box-shadow:0 1px 2px rgba(20,30,50,0.04);}
   label{display:block; font-size:13px; font-weight:600; margin:0 0 6px; color:var(--ink);}
   .hint{font-size:12px; color:var(--ink-soft); margin:-2px 0 8px;}
-  input[type=text], textarea{
-    width:100%; border:1px solid var(--line); border-radius:9px; padding:11px 13px;
-    font-family:'IBM Plex Sans',sans-serif; font-size:14px; color:var(--ink);
-    background:#FBFCFD; resize:vertical;
-  }
-  input[type=text]:focus, textarea:focus{outline:2px solid var(--accent); outline-offset:1px; border-color:var(--accent);}
+  input[type=text]{width:100%; border:1px solid var(--line); border-radius:9px; padding:11px 13px; font-family:'IBM Plex Sans',sans-serif; font-size:14px; color:var(--ink); background:#FBFCFD;}
+  input[type=text]:focus{outline:2px solid var(--accent); outline-offset:1px; border-color:var(--accent);}
   .field{margin-bottom:18px;}
-  textarea{min-height:64px; line-height:1.5;}
-  button{
-    font-family:'IBM Plex Sans',sans-serif; font-weight:600; font-size:14px;
-    border:none; border-radius:9px; padding:12px 20px; cursor:pointer;
-    transition:transform .08s ease, opacity .15s ease;
-  }
-  button:active{transform:scale(0.98);}
+  button{font-family:'IBM Plex Sans',sans-serif; font-weight:600; font-size:14px; border:none; border-radius:9px; padding:12px 20px; cursor:pointer;}
   button:disabled{opacity:.4; cursor:not-allowed;}
   .btn-primary{background:var(--accent); color:var(--accent-ink);}
-  .btn-primary:hover:not(:disabled){opacity:.92;}
-  .btn-ghost{background:transparent; color:var(--ink-soft); border:1px solid var(--line);}
-  .btn-ghost:hover{background:#F3F5F8;}
-  .btn-small{padding:8px 14px; font-size:13px;}
   .row{display:flex; gap:12px; margin-top:22px;}
   .row.end{justify-content:flex-end;}
-  .row.between{justify-content:space-between; align-items:center;}
-  .row.wrap{flex-wrap:wrap;}
-
-  .refbox{
-    background:#F3F6FB; border:1px solid #DCE4F0; border-radius:11px;
-    padding:16px 18px; margin-bottom:22px;
-  }
+  .refbox{background:#F3F6FB; border:1px solid #DCE4F0; border-radius:11px; padding:16px 18px; margin-bottom:22px;}
   .refbox .k{font-family:'IBM Plex Mono',monospace; font-size:11px; text-transform:uppercase; letter-spacing:.06em; color:var(--accent); font-weight:600;}
   .refbox p{margin:4px 0 0; font-size:14px; line-height:1.5; color:var(--ink);}
   .refbox p + p{margin-top:8px;}
@@ -70,241 +39,22 @@
   .progress-label{font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--ink-soft); margin:-16px 0 18px; text-align:right;}
   .item-text{font-size:19px; line-height:1.45; font-weight:500; margin:0 0 26px; color:var(--ink);}
   .scale{display:flex; gap:8px;}
-  .scale button{
-    flex:1; padding:16px 4px; background:#FBFCFD; border:1.5px solid var(--line);
-    border-radius:10px; display:flex; flex-direction:column; align-items:center; gap:6px;
-  }
+  .scale button{flex:1; padding:16px 4px; background:#FBFCFD; border:1.5px solid var(--line); border-radius:10px; display:flex; flex-direction:column; align-items:center; gap:6px;}
   .scale button .num{font-family:'IBM Plex Mono',monospace; font-size:17px; font-weight:600; color:var(--ink);}
   .scale button .lbl{font-size:10px; color:var(--ink-soft); text-align:center; line-height:1.2;}
   .scale button.selected{background:var(--accent); border-color:var(--accent);}
   .scale button.selected .num, .scale button.selected .lbl{color:#fff;}
-  .scale button:hover:not(.selected){border-color:var(--accent);}
-
-  .profile-wrap{display:flex; gap:28px; align-items:center; flex-wrap:wrap; margin-bottom:8px;}
-  .profile-vals{flex:1; min-width:180px;}
-  .pv-row{display:flex; justify-content:space-between; align-items:center; padding:9px 0; border-bottom:1px solid var(--line);}
-  .pv-row:last-child{border-bottom:none;}
-  .pv-name{font-size:13px; font-weight:600;}
-  .pv-num{font-family:'IBM Plex Mono',monospace; font-size:16px; font-weight:600;}
-  .pv-sub{font-size:11px; color:var(--ink-soft); font-family:'IBM Plex Mono',monospace;}
-  table{width:100%; border-collapse:collapse; margin-top:8px; font-size:13px;}
-  th,td{text-align:left; padding:9px 8px; border-bottom:1px solid var(--line);}
-  th{font-family:'IBM Plex Mono',monospace; font-size:10px; text-transform:uppercase; letter-spacing:.05em; color:var(--ink-soft); font-weight:600;}
-  td.num{font-family:'IBM Plex Mono',monospace;}
-  .section-title{font-size:13px; font-weight:700; margin:28px 0 12px; color:var(--ink);}
-  .empty{color:var(--ink-soft); font-size:13px; padding:16px 0;}
-
-  .domain-card{
-    background:var(--panel); border:1px solid var(--line); border-radius:12px;
-    padding:16px 18px; margin-bottom:10px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;
-  }
-  .domain-card .name{font-weight:600; font-size:15px;}
-  .domain-card .count{font-family:'IBM Plex Mono',monospace; font-size:12px; color:var(--ink-soft);}
   .consent-text{font-size:14px; line-height:1.65; color:var(--ink);}
   .consent-text p{margin:0 0 12px;}
   .check-row{display:flex; align-items:flex-start; gap:10px; margin-top:18px; padding:14px; background:#F8F9FB; border-radius:10px;}
   .check-row input{margin-top:2px;}
   .check-row label{font-weight:500; font-size:13px; margin:0; color:var(--ink);}
-  .id-tag{
-    font-family:'IBM Plex Mono',monospace; font-size:12px; background:var(--ink); color:#fff;
-    padding:3px 10px; border-radius:99px; display:inline-block; margin-bottom:16px;
-  }
 </style>
 </head>
 <body>
 <div class="app" id="app"></div>
-
 <script>
-const ITEMS = [
-  {code:'DFE1', text:'The consequences of this behaviour are farther in time and place from the moment I perform it.', barrier:'DFE'},
-  {code:'DFE2', text:'The effects of this behaviour are difficult to see immediately.', barrier:'DFE'},
-  {code:'DFE3', text:'Performing this behaviour once seems unlikely to make a noticeable difference.', barrier:'DFE'},
-  {code:'DFE4', text:'It is difficult to connect this behaviour with its eventual consequences.', barrier:'DFE'},
-  {code:'DFE5', text:'The consequences of this behaviour rarely come to mind when I decide how to act.', barrier:'DFE'},
-  {code:'LKA1', text:'I am uncertain about how to perform this behaviour correctly.', barrier:'LKA'},
-  {code:'LKA2', text:'I am uncertain about what actions this behaviour requires.', barrier:'LKA'},
-  {code:'LKA3', text:'I am uncertain about the situations in which this behaviour should be performed.', barrier:'LKA'},
-  {code:'LKA4', text:'I lack information about the consequences of performing or not performing this behaviour.', barrier:'LKA'},
-  {code:'LKA5', text:'The information or guidance available about this behaviour is difficult to understand.', barrier:'LKA'},
-  {code:'POI1', text:'Performing this behaviour requires too much effort.', barrier:'POI'},
-  {code:'POI2', text:'Performing this behaviour is inconvenient within my normal routine.', barrier:'POI'},
-  {code:'POI3', text:'Performing this behaviour takes more time than I would prefer.', barrier:'POI'},
-  {code:'POI4', text:'The actions required to perform this behaviour are troublesome.', barrier:'POI'},
-  {code:'POI5', text:'It is difficult to perform this behaviour in the situations where it is needed.', barrier:'POI'},
-];
-const ATTENTION_ITEMS = [
-  {code:'ATTN1', text:'This is an attention check. Please select "Agree" for this item.', target:4},
-  {code:'ATTN2', text:'This is an attention check. Please select "Disagree" for this item.', target:2},
-];
-const SCALE = [
-  {v:1, l:'Strongly\ndisagree'}, {v:2, l:'Disagree'}, {v:3, l:'Neither agree\nnor disagree'},
-  {v:4, l:'Agree'}, {v:5, l:'Strongly\nagree'}
-];
-const BARRIER_COLOR = {DFE:'#B4573F', LKA:'#C08A2E', POI:'#3E8E86'};
-
-let state = {
-  screen:'home', domains:{}, activeDomain:null,
-  order:[], idx:0, responses:{}, currentRespondentId:null,
-  participantMode:false, unlocked:false, prolificId:'', surveyStartedAt:null
-};
-const RESEARCHER_PIN = '2468'; // change this to whatever you want your access code to be
-
-const SUPABASE_URL = 'https://alrlqydlnlwpcajtilkb.supabase.co';
-const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFscmxxeWRsbmx3cGNhanRpbGtiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODgwNjM2MjAsImV4cCI6MjEwMzYzOTYyMH0.CzplaeyQfuyaNTln8BmRLtlOvAwfCCk9eYqMI5QFFZY';
-const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-
-function shuffle(arr){
-  const a = arr.slice();
-  for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; }
-  return a;
-}
-function escapeHtml(s){ return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
-
-async function loadState(){
-  try{
-    const { data: domainRows, error: dErr } = await sb.from('domains').select('*').order('created_at');
-    if(dErr) throw dErr;
-    const domains = {};
-    domainRows.forEach(d => { domains[d.name] = { scenario: d.scenario, behaviour: d.behaviour, respondents: [] }; });
-    state.domains = domains;
-  }catch(e){
-    console.error('Supabase load failed:', e);
-    state.loadError = e.message || 'Could not connect to the database.';
-  }
-}
-async function loadDomainResults(domainName){
-  const { data, error } = await sb.rpc('get_domain_respondents_secure', { p_domain: domainName, p_pin: RESEARCHER_PIN });
-  if(error) throw error;
-  return data.map(r => ({
-    id: r.respondent_code,
-    prolificId: r.prolific_id,
-    profile: { DFE: Number(r.dfe), LKA: Number(r.lka), POI: Number(r.poi) },
-    attention: { failCount: r.attention_failed, total: r.attention_total },
-    durationSeconds: r.duration_seconds,
-    ts: r.created_at
-  }));
-}
-async function createDomainRemote(name, scenario, behaviour){
-  const { error } = await sb.rpc('create_domain_secure', { p_name: name, p_scenario: scenario, p_behaviour: behaviour, p_pin: RESEARCHER_PIN });
-  if(error) throw error;
-}
-async function saveRespondentRemote(domainName, prolificId, profile, attention, durationSeconds){
-  const { data, error } = await sb.from('respondents').insert({
-    domain_name: domainName,
-    prolific_id: prolificId,
-    respondent_code: 'pending', // overwritten by the DB trigger
-    dfe: profile.DFE, lka: profile.LKA, poi: profile.POI,
-    attention_failed: attention.failCount, attention_total: ATTENTION_ITEMS.length,
-    started_at: new Date(state.surveyStartedAt).toISOString(),
-    duration_seconds: durationSeconds
-  }).select().single();
-  if(error) throw error;
-  return data.respondent_code;
-}
-
-function computeProfile(responses){
-  const sums = {DFE:0, LKA:0, POI:0};
-  ITEMS.forEach(it => sums[it.barrier] += responses[it.code]);
-  return { DFE: sums.DFE/5, LKA: sums.LKA/5, POI: sums.POI/5 };
-}
-function computeAttention(responses){
-  const results = ATTENTION_ITEMS.map(a => ({ code:a.code, passed: responses[a.code] === a.target }));
-  return { results, failCount: results.filter(r=>!r.passed).length };
-}
-function mean(arr){ return arr.reduce((a,b)=>a+b,0)/arr.length; }
-function stdev(arr){
-  if(arr.length<2) return 0;
-  const m = mean(arr);
-  return Math.sqrt(arr.reduce((s,v)=>s+(v-m)*(v-m),0)/(arr.length-1));
-}
-function domainAggregate(domain){
-  const resp = domain.respondents;
-  const out = {};
-  ['DFE','LKA','POI'].forEach(b=>{
-    const vals = resp.map(r=>r.profile[b]);
-    out[b] = { mean: vals.length?mean(vals):0, sd: stdev(vals), n: vals.length };
-  });
-  return out;
-}
-
-function radarSVG(profile, size=260){
-  const cx=size/2, cy=size/2, maxR=size*0.36, minR=size*0.06;
-  const angles = {DFE:-90, LKA:30, POI:150};
-  const toPt = (val, angleDeg) => {
-    const r = minR + (maxR-minR) * ((val-1)/4);
-    const rad = angleDeg*Math.PI/180;
-    return [cx + r*Math.cos(rad), cy + r*Math.sin(rad)];
-  };
-  const gridRings = [1,2,3,4,5].map(v=>{
-    const pts = ['DFE','LKA','POI'].map(b=>toPt(v,angles[b]).join(',')).join(' ');
-    return `<polygon points="${pts}" fill="none" stroke="#DDE2E9" stroke-width="1"/>`;
-  }).join('');
-  const axisLines = ['DFE','LKA','POI'].map(b=>{
-    const [x,y] = toPt(5, angles[b]);
-    return `<line x1="${cx}" y1="${cy}" x2="${x}" y2="${y}" stroke="#DDE2E9" stroke-width="1"/>`;
-  }).join('');
-  const dataPts = ['DFE','LKA','POI'].map(b=>toPt(profile[b], angles[b]).join(',')).join(' ');
-  const labels = ['DFE','LKA','POI'].map(b=>{
-    const [x,y] = toPt(5.9, angles[b]);
-    return `<text x="${x}" y="${y}" text-anchor="middle" dominant-baseline="middle" font-family="IBM Plex Mono, monospace" font-size="13" font-weight="600" fill="${BARRIER_COLOR[b]}">${b}</text>`;
-  }).join('');
-  return `<svg width="${size}" height="${size}" viewBox="0 0 ${size} ${size}">
-    ${gridRings}${axisLines}
-    <polygon points="${dataPts}" fill="#3B5BA5" fill-opacity="0.22" stroke="#3B5BA5" stroke-width="2"/>
-    ${labels}
-  </svg>`;
-}
-
-function nextRespondentId(domainName){
-  const n = (state.domains[domainName]?.respondents.length || 0) + 1;
-  return 'R' + String(n).padStart(2,'0');
-}
-
-function respondentLink(domainName){
-  const url = new URL(window.location.href);
-  url.search = '';
-  url.searchParams.set('domain', domainName);
-  return url.toString();
-}
-
-function renderPinGate(){
-  const app = document.getElementById('app');
-  app.innerHTML = `
-    <div class="eyebrow">I-BB Barrier Rubric</div>
-    <h1>Researcher access</h1>
-    <p class="sub">Enter your access code to manage domains and view results. Participants never see this screen — they use a direct respondent link instead.</p>
-    <div class="panel">
-      <div class="field">
-        <label for="pin">Access code</label>
-        <input type="text" id="pin" placeholder="Enter code" autocomplete="off">
-      </div>
-      <div class="row end">
-        <button class="btn-primary" id="unlockBtn">Continue</button>
-      </div>
-      <p class="hint" id="pinError" style="color:#B4573F; margin-top:10px; display:none;">Incorrect code — try again.</p>
-    </div>
-  `;
-  const tryUnlock = async () => {
-    const val = document.getElementById('pin').value.trim();
-    if(val !== RESEARCHER_PIN){ document.getElementById('pinError').style.display = 'block'; return; }
-    const btn = document.getElementById('unlockBtn');
-    btn.disabled = true; btn.textContent = 'Loading...';
-    try{
-      for(const name of Object.keys(state.domains)){
-        state.domains[name].respondents = await loadDomainResults(name);
-      }
-      state.unlocked = true;
-      state.screen = 'home';
-      render();
-    }catch(e){
-      document.getElementById('pinError').textContent = 'Could not verify code: ' + (e.message || 'unknown error');
-      document.getElementById('pinError').style.display = 'block';
-      btn.disabled = false; btn.textContent = 'Continue';
-    }
-  };
-  document.getElementById('unlockBtn').onclick = tryUnlock;
-  document.getElementById('pin').onkeydown = e => { if(e.key==='Enter') tryUnlock(); };
-}
+let state = { screen:'noLink', domain:null, meta:null, order:[], idx:0, responses:{}, prolificId:'', surveyStartedAt:null };
 
 function render(){
   const app = document.getElementById('app');
@@ -313,134 +63,23 @@ function render(){
     app.innerHTML = `
       <div class="eyebrow">I-BB Barrier Rubric</div>
       <h1>No study link provided</h1>
-      <div class="panel">
-        <p style="font-size:14px; line-height:1.6;">This page needs a specific link to work. If you were sent here to complete a survey, please use the exact link you were given rather than this page directly.</p>
-      </div>
+      <div class="panel"><p style="font-size:14px; line-height:1.6;">This page needs a specific link to work. If you were sent here to complete a survey, please use the exact link you were given rather than this page directly.</p></div>
     `;
     return;
   }
 
-  if(state.loadError){
+  if(state.screen === 'loadError'){
     app.innerHTML = `
       <div class="eyebrow">I-BB Barrier Rubric</div>
       <h1>Connection problem</h1>
-      <div class="panel">
-        <p style="font-size:14px; line-height:1.6;">Couldn't reach the database: <code>${escapeHtml(state.loadError)}</code></p>
-        <p style="font-size:13px; color:var(--ink-soft); margin-top:12px;">Check that this page is being served over http(s) (not opened directly as a local file) and that the Supabase URL/key in the script are correct.</p>
-      </div>
+      <div class="panel"><p style="font-size:14px; line-height:1.6;">Couldn't load this study. Please try the link again, or contact the researcher who sent it to you.</p></div>
     `;
-    return;
-  }
-
-  if(state.screen === 'home' && !state.unlocked){
-    renderPinGate();
-    return;
-  }
-
-  if(state.screen === 'home'){
-    const names = Object.keys(state.domains);
-    app.innerHTML = `
-      <div class="eyebrow">I-BB Barrier Rubric</div>
-      <h1>Domains</h1>
-      <p class="sub">Add respondents to an existing domain, or set up a new one. The 15 rubric items stay fixed across every domain.</p>
-      ${names.length ? names.map(n=>{
-        const d = state.domains[n];
-        return `<div class="domain-card">
-          <div>
-            <div class="name">${escapeHtml(n)}</div>
-            <div class="count">${d.respondents.length} respondent${d.respondents.length===1?'':'s'}</div>
-          </div>
-          <div class="row" style="margin:0;">
-            <button class="btn-ghost btn-small" data-link="${escapeHtml(n)}">Copy respondent link</button>
-            <button class="btn-ghost btn-small" data-summary="${escapeHtml(n)}">View summary</button>
-            <button class="btn-primary btn-small" data-add="${escapeHtml(n)}">Add respondent</button>
-          </div>
-        </div>`;
-      }).join('') : '<p class="empty">No domains yet — create one below.</p>'}
-      <div class="row end">
-        <button class="btn-primary" id="newDomainBtn">+ New domain</button>
-      </div>
-    `;
-    app.querySelectorAll('[data-add]').forEach(b => b.onclick = () => {
-      state.activeDomain = b.dataset.add;
-      state.screen = 'consent';
-      render();
-    });
-    app.querySelectorAll('[data-summary]').forEach(b => b.onclick = async () => {
-      state.activeDomain = b.dataset.summary;
-      b.textContent = 'Loading...';
-      try{
-        state.domains[state.activeDomain].respondents = await loadDomainResults(state.activeDomain);
-      }catch(e){ alert('Could not load results: ' + (e.message||'unknown error')); return; }
-      state.screen = 'domainSummary';
-      render();
-    });
-    app.querySelectorAll('[data-link]').forEach(b => b.onclick = () => {
-      const link = respondentLink(b.dataset.link);
-      navigator.clipboard.writeText(link).then(() => {
-        const old = b.textContent;
-        b.textContent = 'Link copied!';
-        setTimeout(() => { b.textContent = old; }, 1500);
-      }).catch(() => { prompt('Copy this link:', link); });
-    });
-    document.getElementById('newDomainBtn').onclick = () => { state.screen = 'newDomain'; render(); };
-    return;
-  }
-
-  if(state.screen === 'newDomain'){
-    app.innerHTML = `
-      <div class="eyebrow">New domain</div>
-      <h1>Describe the domain</h1>
-      <p class="sub">This defines the scenario and behaviour reference respondents will see. Items themselves cannot be edited here.</p>
-      <div class="panel">
-        <div class="field">
-          <label for="domain">Domain name</label>
-          <input type="text" id="domain" placeholder="e.g. Online commenting">
-        </div>
-        <div class="field">
-          <label for="scenario">Scenario</label>
-          <div class="hint">The situation respondents should picture before answering.</div>
-          <textarea id="scenario" placeholder="e.g. Imagine you come across a post online that you disagree with..."></textarea>
-        </div>
-        <div class="field">
-          <label for="behaviour">Behaviour reference</label>
-          <div class="hint">The exact behaviour "this behaviour" refers to throughout the items.</div>
-          <textarea id="behaviour" placeholder="e.g. Writing a constructive comment when responding to content online."></textarea>
-        </div>
-        <div class="row between">
-          <button class="btn-ghost" id="cancelBtn">Cancel</button>
-          <button class="btn-primary" id="createBtn" disabled>Create & add first respondent</button>
-        </div>
-      </div>
-    `;
-    const domainEl = document.getElementById('domain'), scenarioEl = document.getElementById('scenario'), behEl = document.getElementById('behaviour');
-    const checkValid = () => {
-      document.getElementById('createBtn').disabled = !(domainEl.value.trim() && scenarioEl.value.trim() && behEl.value.trim());
-    };
-    [domainEl, scenarioEl, behEl].forEach(el => el.oninput = checkValid);
-    document.getElementById('cancelBtn').onclick = () => { state.screen = 'home'; render(); };
-    document.getElementById('createBtn').onclick = async () => {
-      const name = domainEl.value.trim();
-      if(state.domains[name]){ alert('A domain with this name already exists — use "Add respondent" from the home screen instead.'); return; }
-      const btn = document.getElementById('createBtn');
-      btn.disabled = true; btn.textContent = 'Creating...';
-      try{
-        await createDomainRemote(name, scenarioEl.value.trim(), behEl.value.trim());
-        state.domains[name] = { scenario: scenarioEl.value.trim(), behaviour: behEl.value.trim(), respondents: [] };
-        state.activeDomain = name;
-        state.screen = 'consent';
-        render();
-      }catch(e){
-        alert('Could not create domain: ' + (e.message || 'unknown error'));
-        btn.disabled = false; btn.textContent = 'Create & add first respondent';
-      }
-    };
     return;
   }
 
   if(state.screen === 'consent'){
     app.innerHTML = `
-      <div class="eyebrow">${escapeHtml(state.activeDomain)}</div>
+      <div class="eyebrow">${escapeHtml(state.domain)}</div>
       <h1>Before you begin</h1>
       <div class="panel">
         <div class="consent-text">
@@ -457,20 +96,16 @@ function render(){
           <input type="checkbox" id="agreeBox">
           <label for="agreeBox">I have read the above and agree to participate.</label>
         </div>
-        <div class="row ${state.participantMode ? 'end' : 'between'}">
-          ${state.participantMode ? '' : '<button class="btn-ghost" id="backHome">Back</button>'}
+        <div class="row end">
           <button class="btn-primary" id="beginBtn" disabled>Begin questionnaire</button>
         </div>
       </div>
     `;
     const pidEl = document.getElementById('prolificId');
     const agreeEl = document.getElementById('agreeBox');
-    const checkReady = () => {
-      document.getElementById('beginBtn').disabled = !(pidEl.value.trim() && agreeEl.checked);
-    };
+    const checkReady = () => { document.getElementById('beginBtn').disabled = !(pidEl.value.trim() && agreeEl.checked); };
     pidEl.oninput = checkReady;
     agreeEl.onchange = checkReady;
-    if(!state.participantMode) document.getElementById('backHome').onclick = () => { state.screen = 'home'; render(); };
     document.getElementById('beginBtn').onclick = () => {
       state.prolificId = pidEl.value.trim();
       state.order = shuffle(ITEMS.concat(ATTENTION_ITEMS));
@@ -484,33 +119,24 @@ function render(){
   }
 
   if(state.screen === 'survey'){
-    const d = state.domains[state.activeDomain];
     const item = state.order[state.idx];
-    const pct = Math.round(((state.idx)/state.order.length)*100);
+    const pct = Math.round((state.idx/state.order.length)*100);
     app.innerHTML = `
-      <div class="eyebrow">${escapeHtml(state.activeDomain)} — ${escapeHtml(state.prolificId)}</div>
+      <div class="eyebrow">${escapeHtml(state.domain)}</div>
       <h1>Rate each statement</h1>
       <p class="sub">Answer according to your own experience. There are no right or wrong answers.</p>
       <div class="refbox">
-        <div class="k">Scenario</div>
-        <p>${escapeHtml(d.scenario)}</p>
-        <div class="k" style="margin-top:10px;">This behaviour refers to</div>
-        <p>${escapeHtml(d.behaviour)}</p>
+        <div class="k">Scenario</div><p>${escapeHtml(state.meta.scenario)}</p>
+        <div class="k" style="margin-top:10px;">This behaviour refers to</div><p>${escapeHtml(state.meta.behaviour)}</p>
       </div>
       <div class="progress-track"><div class="progress-fill" style="width:${pct}%"></div></div>
       <div class="progress-label">${state.idx+1} of ${state.order.length}</div>
       <div class="panel">
         <p class="item-text">${escapeHtml(item.text)}</p>
         <div class="scale">
-          ${SCALE.map(s => `
-            <button data-v="${s.v}" class="${state.responses[item.code]===s.v?'selected':''}">
-              <span class="num">${s.v}</span>
-              <span class="lbl">${s.l.replace('\n','<br>')}</span>
-            </button>
-          `).join('')}
+          ${SCALE.map(s => `<button data-v="${s.v}" class="${state.responses[item.code]===s.v?'selected':''}"><span class="num">${s.v}</span><span class="lbl">${s.l.replace('\n','<br>')}</span></button>`).join('')}
         </div>
-        <div class="row between">
-          <button class="btn-ghost" id="backBtn" ${state.idx===0?'disabled':''}>Back</button>
+        <div class="row end">
           <button class="btn-primary" id="nextBtn" ${state.responses[item.code]?'':'disabled'}>${state.idx===state.order.length-1?'Finish':'Next'}</button>
         </div>
       </div>
@@ -518,162 +144,48 @@ function render(){
     app.querySelectorAll('.scale button').forEach(btn=>{
       btn.onclick = () => { state.responses[item.code] = parseInt(btn.dataset.v); render(); };
     });
-    document.getElementById('backBtn').onclick = () => { if(state.idx>0){ state.idx--; render(); } };
     document.getElementById('nextBtn').onclick = async () => {
       if(!state.responses[item.code]) return;
-      if(state.idx < state.order.length-1){ state.idx++; render(); }
-      else{
-        const profile = computeProfile(state.responses);
-        const attention = computeAttention(state.responses);
-        const durationSeconds = Math.round((Date.now() - state.surveyStartedAt) / 1000);
-        const nextBtn = document.getElementById('nextBtn');
-        nextBtn.disabled = true; nextBtn.textContent = 'Saving...';
-        try{
-          const code = await saveRespondentRemote(state.activeDomain, state.prolificId, profile, attention, durationSeconds);
-          state.currentRespondentId = code;
-          state.lastResult = { id: code, prolificId: state.prolificId, profile, attention, durationSeconds, ts: new Date().toISOString() };
-          state.screen = 'respondentDone';
-          render();
-        }catch(e){
-          alert('Could not save your response, please try again: ' + (e.message || 'unknown error'));
-          nextBtn.disabled = false; nextBtn.textContent = 'Finish';
-        }
+      if(state.idx < state.order.length-1){ state.idx++; render(); return; }
+      const profile = computeProfile(state.responses);
+      const attention = computeAttention(state.responses);
+      const durationSeconds = Math.round((Date.now() - state.surveyStartedAt)/1000);
+      const nextBtn = document.getElementById('nextBtn');
+      nextBtn.disabled = true; nextBtn.textContent = 'Saving...';
+      try{
+        await saveRespondentRemote(state.domain, state.prolificId, profile, attention, durationSeconds, state.surveyStartedAt);
+        state.screen = 'done';
+        render();
+      }catch(e){
+        alert('Could not save your response, please try again: ' + (e.message || 'unknown error'));
+        nextBtn.disabled = false; nextBtn.textContent = 'Finish';
       }
     };
     return;
   }
 
-  if(state.screen === 'respondentDone'){
-    const latest = state.lastResult;
-
-    if(state.participantMode){
-      app.innerHTML = `
-        <div class="eyebrow">${escapeHtml(state.activeDomain)}</div>
-        <h1>Thank you</h1>
-        <div class="panel">
-          <p style="font-size:15px; line-height:1.6;">Your responses have been recorded. You may now close this window.</p>
-        </div>
-      `;
-      return;
-    }
-
+  if(state.screen === 'done'){
     app.innerHTML = `
-      <div class="eyebrow">${escapeHtml(state.activeDomain)} — ${latest.id}</div>
-      <h1>Response recorded</h1>
-      <p class="sub">Thank you. This respondent's profile has been added to the domain. Completed in ${latest.durationSeconds}s.${latest.attention.failCount > 0 ? ` <span style="color:#B4573F; font-weight:600;">Failed ${latest.attention.failCount} of ${ATTENTION_ITEMS.length} attention checks.</span>` : ''}</p>
-      <div class="panel">
-        <div class="profile-wrap">
-          ${radarSVG(latest.profile)}
-          <div class="profile-vals">
-            <div class="pv-row"><span class="pv-name" style="color:${BARRIER_COLOR.DFE}">DFE</span><span class="pv-num">${latest.profile.DFE.toFixed(2)}</span></div>
-            <div class="pv-row"><span class="pv-name" style="color:${BARRIER_COLOR.LKA}">LKA</span><span class="pv-num">${latest.profile.LKA.toFixed(2)}</span></div>
-            <div class="pv-row"><span class="pv-name" style="color:${BARRIER_COLOR.POI}">POI</span><span class="pv-num">${latest.profile.POI.toFixed(2)}</span></div>
-          </div>
-        </div>
-        <div class="row wrap end">
-          <button class="btn-ghost" id="summaryBtn">View domain summary</button>
-          <button class="btn-primary" id="anotherBtn">Add another respondent</button>
-        </div>
-      </div>
+      <div class="eyebrow">${escapeHtml(state.domain)}</div>
+      <h1>Thank you</h1>
+      <div class="panel"><p style="font-size:15px; line-height:1.6;">Your responses have been recorded. You may now close this window.</p></div>
     `;
-    document.getElementById('summaryBtn').onclick = async () => {
-      try{ state.domains[state.activeDomain].respondents = await loadDomainResults(state.activeDomain); }
-      catch(e){ alert('Could not load results: ' + (e.message||'unknown error')); return; }
-      state.screen = 'domainSummary';
-      render();
-    };
-    document.getElementById('anotherBtn').onclick = () => { state.screen = 'consent'; render(); };
-    return;
-  }
-
-  if(state.screen === 'domainSummary'){
-    const d = state.domains[state.activeDomain];
-    const agg = domainAggregate(d);
-    const meanProfile = { DFE: agg.DFE.mean, LKA: agg.LKA.mean, POI: agg.POI.mean };
-    const rows = d.respondents.map(r => `
-      <tr>
-        <td>${r.id}</td>
-        <td style="font-family:'IBM Plex Mono',monospace; font-size:11px;">${escapeHtml(r.prolificId)}</td>
-        <td class="num" style="color:${BARRIER_COLOR.DFE}">${r.profile.DFE.toFixed(2)}</td>
-        <td class="num" style="color:${BARRIER_COLOR.LKA}">${r.profile.LKA.toFixed(2)}</td>
-        <td class="num" style="color:${BARRIER_COLOR.POI}">${r.profile.POI.toFixed(2)}</td>
-        <td class="num">${r.durationSeconds}s</td>
-        <td>${r.attention.failCount === 0 ? '<span style="color:#3E8E86;">Passed</span>' : `<span style="color:#B4573F; font-weight:600;">Failed ${r.attention.failCount}/${ATTENTION_ITEMS.length}</span>`}</td>
-      </tr>
-    `).join('');
-    app.innerHTML = `
-      <div class="eyebrow">${escapeHtml(state.activeDomain)}</div>
-      <h1>Domain-level calculation</h1>
-      <p class="sub">Aggregated across ${d.respondents.length} respondent${d.respondents.length===1?'':'s'}. Mean of individual subscale means — no importance weighting, no composite score.</p>
-      ${d.respondents.length === 0 ? `
-        <div class="panel"><p class="empty">No respondents yet for this domain.</p></div>
-      ` : `
-        <div class="panel">
-          <div class="profile-wrap">
-            ${radarSVG(meanProfile)}
-            <div class="profile-vals">
-              <div class="pv-row">
-                <span class="pv-name" style="color:${BARRIER_COLOR.DFE}">DFE</span>
-                <span><span class="pv-num">${agg.DFE.mean.toFixed(2)}</span><br><span class="pv-sub">SD ${agg.DFE.sd.toFixed(2)}, n=${agg.DFE.n}</span></span>
-              </div>
-              <div class="pv-row">
-                <span class="pv-name" style="color:${BARRIER_COLOR.LKA}">LKA</span>
-                <span><span class="pv-num">${agg.LKA.mean.toFixed(2)}</span><br><span class="pv-sub">SD ${agg.LKA.sd.toFixed(2)}, n=${agg.LKA.n}</span></span>
-              </div>
-              <div class="pv-row">
-                <span class="pv-name" style="color:${BARRIER_COLOR.POI}">POI</span>
-                <span><span class="pv-num">${agg.POI.mean.toFixed(2)}</span><br><span class="pv-sub">SD ${agg.POI.sd.toFixed(2)}, n=${agg.POI.n}</span></span>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="section-title">Per-respondent breakdown</div>
-        <div class="panel">
-          <table>
-            <thead><tr><th>Respondent</th><th>Prolific ID</th><th>DFE</th><th>LKA</th><th>POI</th><th>Duration</th><th>Attention</th></tr></thead>
-            <tbody>${rows}</tbody>
-          </table>
-        </div>
-      `}
-      <div class="row between">
-        <button class="btn-ghost" id="homeBtn">Back to domains</button>
-        <div class="row" style="margin:0;">
-          ${d.respondents.length ? '<button class="btn-ghost" id="exportBtn">Export CSV</button>' : ''}
-          <button class="btn-primary" id="addBtn">Add respondent</button>
-        </div>
-      </div>
-    `;
-    document.getElementById('homeBtn').onclick = () => { state.screen = 'home'; render(); };
-    document.getElementById('addBtn').onclick = () => { state.screen = 'consent'; render(); };
-    const exportBtn = document.getElementById('exportBtn');
-    if(exportBtn) exportBtn.onclick = () => {
-      const header = 'domain,respondent_id,prolific_id,DFE,LKA,POI,duration_seconds,attention_checks_failed,attention_total,timestamp\n';
-      const rows = d.respondents.map(r => [state.activeDomain, r.id, r.prolificId, r.profile.DFE.toFixed(3), r.profile.LKA.toFixed(3), r.profile.POI.toFixed(3), r.durationSeconds, r.attention.failCount, ATTENTION_ITEMS.length, r.ts]
-        .map(v => `"${(v+'').replace(/"/g,'""')}"`).join(',')).join('\n');
-      const blob = new Blob([header+rows], {type:'text/csv'});
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url; a.download = `${state.activeDomain.replace(/\s+/g,'_')}_results.csv`; a.click();
-      URL.revokeObjectURL(url);
-    };
     return;
   }
 }
 
 async function boot(){
-  await loadState();
   const params = new URLSearchParams(window.location.search);
   const domainParam = params.get('domain');
-  const isAdmin = params.get('admin') === '1';
-
-  if(domainParam && state.domains[domainParam]){
-    state.participantMode = true;
-    state.activeDomain = domainParam;
+  if(!domainParam){ state.screen = 'noLink'; render(); return; }
+  try{
+    const domains = await fetchDomainMeta();
+    if(!domains[domainParam]){ state.screen = 'noLink'; render(); return; }
+    state.domain = domainParam;
+    state.meta = domains[domainParam];
     state.screen = 'consent';
-  } else if(isAdmin){
-    state.screen = 'home'; // will hit the PIN gate inside render()
-  } else {
-    state.screen = 'noLink';
+  }catch(e){
+    state.screen = 'loadError';
   }
   render();
 }
